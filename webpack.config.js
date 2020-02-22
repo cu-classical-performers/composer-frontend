@@ -23,7 +23,7 @@ module.exports = (env, options) => {
         externals: {
             // global app config object
             config: JSON.stringify({
-                apiUrl: 'http://localhost:3000' //'https://call-for-scores-api.herokuapp.com/'
+                apiUrl: 'https://call-for-scores-api.herokuapp.com/'
             })
         },
         plugins: [new MiniCssExtractPlugin("[name].css"), htmlWebpackPlugin],
