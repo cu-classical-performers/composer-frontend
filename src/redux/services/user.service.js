@@ -4,8 +4,44 @@ import { authHeader } from '../helpers';
 export const userService = {
     login,
     logout,
-    getAll
+    getAll,
+    signup,
+    resetPwd
 };
+
+function resetPwd(username, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ user: { email: username } })
+    };
+
+    return fetch(`${config.apiUrl}/users/password/request_reset`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('user', JSON.stringify(user));
+
+            return user;
+        });
+}
+
+function signup(username, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ user: { email: username, password: password } })
+    };
+
+    return fetch(`${config.apiUrl}/users`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('user', JSON.stringify(user));
+
+            return user;
+        });
+}
 
 function login(username, password) {
     const requestOptions = {
@@ -35,7 +71,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/v1/users`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

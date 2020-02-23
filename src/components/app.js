@@ -24,7 +24,7 @@ import Home from './pug/content/home';
 
 import Dashboard from './dashboard';
 
-import {LoginModal} from './login_modal';
+import {SessionModal} from './session_modal';
 
 // import '../../assets/sass/main.scss';
 
@@ -53,7 +53,7 @@ class WrappedApp extends React.Component {
       
       { this.props.loggedIn && <Link to="/dashboard">Dashboard</Link> }
 
-      { !this.props.loggedIn && <LoginModal /> }
+      { !this.props.loggedIn && <SessionModal /> }
       { this.props.loggedIn && <a href="" onClick={() => this.props.dispatch(userActions.logout())}>Logout</a> }
       
       

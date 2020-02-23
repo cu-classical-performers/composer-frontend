@@ -6,8 +6,54 @@ import { history } from '../helpers';
 export const userActions = {
     login,
     logout,
-    getAll
+    getAll,
+    signup,
+    resetPwd
 };
+
+function resetPwd(username, password) {
+    return dispatch => {
+        dispatch(request({ username }));
+
+        userService.resetPwd(username)
+            .then(
+                user => { 
+                    dispatch(success(user));
+                    history.push('/');
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.RESETPWD_REQUEST, user } }
+    function success(user) { return { type: userConstants.RESETPWD_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.RESETPWD_FAILURE, error } }
+}
+
+function signup(username, password) {
+    return dispatch => {
+        dispatch(request({ username }));
+
+        userService.signup(username, password)
+            .then(
+                user => { 
+                    dispatch(success(user));
+                    history.push('/');
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.SIGNUP_REQUEST, user } }
+    function success(user) { return { type: userConstants.SIGNUP_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.SIGNUP_FAILURE, error } }
+}
 
 function login(username, password) {
     return dispatch => {

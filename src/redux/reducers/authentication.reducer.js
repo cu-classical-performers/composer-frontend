@@ -17,6 +17,30 @@ export function authentication(state = initialState, action) {
       };
     case userConstants.LOGIN_FAILURE:
       return {};
+    case userConstants.SIGNUP_REQUEST:
+      return {
+        signingIn: true,
+        user: action.user
+      };
+    case userConstants.SIGNUP_SUCCESS:
+      return {
+        signedUp: true,
+        user: action.user
+      };
+    case userConstants.SIGNUP_FAILURE:
+      return {};
+    case userConstants.RESETPWD_REQUEST:
+      return {
+        resettingPwd: true,
+        user: action.user
+      };
+    case userConstants.RESETPWD_SUCCESS:
+      return {
+        resetPwd: true,
+        user: action.user
+      };
+    case userConstants.RESETPWD_FAILURE:
+      return {};
     case userConstants.LOGOUT:
       return {};
     default:
